@@ -1,0 +1,30 @@
+# the name for each instance will eventually be the column name in the returned 
+# dataframe and CSV.
+File (2*.o):
+  search_for: 'RINEX FILE'
+  regex_str: 'FILE: (.+?)\.2\do'  # this serach most likely to need altering
+  group_number: 0
+Northing [m]:
+  search_for: 'Northing (Y) [meters]'
+  regex_str: '[0-9]+\.[0-9]+'
+  group_number: 1
+sigma_N [m]:  # northing 1-sigma
+  search_for: 'LAT:'
+  regex_str: '[0-9]+\.[[0-9]+'
+  group_number: 1
+Easting [m]:
+  search_for: 'Easting (X)  [meters]'
+  regex_str: '[0-9]+\.[0-9]+'
+  group_number: 1
+sigma_E [m]:  # easting 1-sigma
+  search_for: 'E LON:'
+  regex_str: '[0-9]+\.[0-9]+'
+  group_number: 1
+Ortho Hgt [m]:
+  search_for: 'ORTHO HGT:'
+  regex_str: '[0-9]+\.[0-9]+'
+  group_number: 0
+sigma_H [m]:  # height 1-sigma
+  search_for: 'ORTHO HGT'
+  regex_str: '[0-9]+\.[0-9]+'
+  group_number: 1
