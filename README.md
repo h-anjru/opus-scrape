@@ -1,6 +1,8 @@
 # opus-scrape
 Scrape the human-readable, ASCII solutions from NGS' OPUS from multiple solutions into a single CSV.
 
+![A table of results scraped from a number of OPUS Rapid Static solutions.](opus_scrape_table.png)
+
 ## How it works
 This script searches for certain key phrases in the OPUS solution that indicate where a value of interest may be. It then performs a regex search to pull the value from that line of the OPUS solution, eventually placing all found values into a Pandas dataframe that is printed into a CSV.
 

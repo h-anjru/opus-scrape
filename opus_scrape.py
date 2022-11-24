@@ -3,6 +3,12 @@ import pandas as pd
 import regex
 import yaml
 
+# ---Input and output info; user edit here---
+path_to_solutions = '/mnt/c/project_01/opus'
+path_to_output = '/mnt/c/project_01/opus/output'
+output_name = 'project_01.csv'
+
+
 def scrape_opus_solution(infile, search_crit):
     """
     Scrape the text of the human-readable ASCII version of an NGS OPUS solution for any search criteria specified.
@@ -33,10 +39,10 @@ def scrape_opus_solution(infile, search_crit):
 
 def open_yaml(infile):
     """Bring in contents of a YAML as a dictionary."""
-        # opening a file
+
     with open(infile, 'r') as stream:
         try:
-            # Converts yaml document to python object
+            # Converts YAML document to Python object
             d = yaml.safe_load(stream)
             return d
         except yaml.YAMLError as e:
@@ -51,13 +57,13 @@ search_criteria = open_yaml(path_to_yaml)
 all_data = []
 
 # open each OPUS solution
-path_to_opus = '/mnt/c/dev'
-path = os.fsencode(path_to_opus)
+path = os.fsencode(path_to_solutions)
 
 for file in os.listdir(path):
     filename = os.fsdecode(file)
     if filename.endswith('.txt'):  # assuming in a directory with only OPUS solutions as .txt files
-        data = scrape_opus_solution(filename, search_criteria)
+        path_to_file = os.path.join(path_to_solutions, filename)
+        data = scrape_opus_solution(path_to_file, search_criteria)
         all_data.append(data)
     else:
         continue
@@ -73,6 +79,8 @@ df = pd.DataFrame(all_data, columns=column_names)
 # print results in terminal
 print(df)
 
-# save to CSV
-outpath = os.path.join(path_to_opus, 'all_coordinates.csv')
-df.to_csv(outpath)
+# save output
+if not os.path.exists(path_to_output):
+    os.makedirs(path_to_output)
+
+df.to_csv(os.path.join(path_to_output, output_name))
